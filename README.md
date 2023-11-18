@@ -9,3 +9,7 @@
 - Funções
 - Programação Orientada a Objetos em Python
 - Tratamento de exceções
+
+# Equipe
+- Darley (Dan) Souza Sampaio (dan.souza.swork@gmail.com)
+- Ticiana Hoog
