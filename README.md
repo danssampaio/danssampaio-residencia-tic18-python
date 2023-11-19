@@ -11,5 +11,5 @@
 - Tratamento de exceções
 
 # Equipe
-- Darley (Dan) Souza Sampaio (dan.souza.swork@gmail.com)
-- Ticiana Hoog
+1. Darley (Dan) Souza Sampaio (dan.souza.swork@gmail.com)
+2. Ticiana Hoog de Sá Paternostro (ticianapaternostro@gmail.com)
