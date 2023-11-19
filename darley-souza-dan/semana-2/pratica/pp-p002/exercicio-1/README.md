@@ -1,6 +1,6 @@
 ### Exercício 1 - Utilizando estruturas de controle de fluxo e listas
 
-Utilizei os conceitos de classes pois já programava em python. Utilizando ou não o programa não difere muito em sua estrutura, só utilizei pois consigo visualizar melhor.
+Utilizei os conceitos de classes pois já programava em python. Utilizando ou não o programa não difere muito na legibilidade, só utilizei pois consigo visualizar melhor.
 
 #### Menu de opções
 
