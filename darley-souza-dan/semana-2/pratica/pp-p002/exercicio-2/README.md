@@ -1,6 +1,6 @@
 ### Exercício 2: Pesquisa sobre persistência de dados.
 
-Utilizei a biblioteca pickle para serializar e desserializar os dados. Poderia utilizar um arquivo .txt para salvar e coletar os dados através de uma função com delimitador, mas como utilizei classes, consigo utilizar esta biblioteca. Este processo também se encontra na fstream do C++, mas um pouco mais bruto.
+Utilizei a biblioteca pickle para serializar e desserializar os dados. Poderia utilizar um arquivo .txt ou até mesmo um .json para salvar e coletar os dados através de uma função com delimitador, mas como utilizei classes, consigo utilizar esta biblioteca. Este processo também se encontra na fstream do C++, mas um pouco mais bruto.
 
 #### Pickle
 
