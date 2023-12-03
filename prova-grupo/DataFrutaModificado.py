@@ -114,9 +114,8 @@ class ListaNomes(AnaliseDados):
         sorted_list = sorted(self.__lista)
         n = len(sorted_list)
         if n % 2 == 0:
-            median1 = sorted_list[n // 2 - 1]
-            median2 = sorted_list[n // 2]
-            print(f"Mediana: {median1}")
+            median = sorted_list[n // 2 - 1]
+            print(f"Mediana: {median}")
         else:
             median = sorted_list[n // 2]
             print(f"Mediana: {median}")
@@ -138,22 +137,32 @@ class ListaDatas(AnaliseDados):
 
     def entradaDeDados(self):
         n = int(input("Quantas datas deseja adicionar? "))
+
         for _ in range(n):
-            print("Digite a data no formato dia/mês/ano: ")
-            data_input = input().split("/")
-            dia = int(data_input[0])
-            mes = int(data_input[1])
-            ano = int(data_input[2])
-            data = Data(dia, mes, ano)
-            self.__lista.append(data)
+            while True:
+                try:
+                    print("Digite a data no formato dia/mês/ano: ")
+                    data_input = input().split("/")
+                    dia = int(data_input[0])
+                    mes = int(data_input[1])
+                    ano = int(data_input[2])
+
+                    if ano < 2020 or mes < 1 or mes > 12 or dia < 1:
+                        raise ValueError("A data inserida não atende aos requisitos.")
+
+                    data = Data(dia, mes, ano)
+                    self.__lista.append(data)
+                    break
+
+                except ValueError as e:
+                    print(f"Erro: {e}. Tente novamente.")
 
     def mostraMediana(self):
         sorted_list = sorted(self.__lista, key=lambda x: (x.ano, x.mes, x.dia))
         n = len(sorted_list)
         if n % 2 == 0:
-            median1 = sorted_list[n // 2 - 1]
-            median2 = sorted_list[n // 2]
-            print(f"Mediana: {median1}")
+            median = sorted_list[n // 2 - 1]
+            print(f"Mediana: {median}")
         else:
             median = sorted_list[n // 2]
             print(f"Mediana: {median}")
@@ -176,18 +185,24 @@ class ListaSalarios(AnaliseDados):
         self.__lista = []
 
     def entradaDeDados(self):
-        n = int(input("Quantos salários deseja adicionar? "))
-        for _ in range(n):
-            salario = float(input("Digite um salário: "))
-            self.__lista.append(salario)
+        try:
+            n = int(input("Quantos salários deseja adicionar? "))
+            for _ in range(n):
+                while True:
+                    try:
+                        salario = float(input("Digite um salário: "))
+                        break
+                    except ValueError:
+                        print("Por favor, insira um valor numérico válido.")
+                self.__lista.append(salario)
+        except ValueError:
+            print("Por favor, insira um número válido para a quantidade de salários.")
 
     def mostraMediana(self):
         sorted_list = sorted(self.__lista)
         n = len(sorted_list)
         if n % 2 == 0:
-            median1 = sorted_list[n // 2 - 1]
-            median2 = sorted_list[n // 2]
-            median = (median1 + median2) / 2
+            median = sorted_list[n // 2 - 1]
             print(f"Mediana: {median:.2f}")
         else:
             median = sorted_list[n // 2]
@@ -209,22 +224,29 @@ class ListaIdades(AnaliseDados):
         self.__lista = []
 
     def entradaDeDados(self):
-        n = int(input("Quantas idades deseja adicionar? "))
+        try:
+            n = int(input("Quantas idades deseja adicionar? "))
+        except:
+            print("Digite um valor numérico!!\n")
+        
         for _ in range(n):
-            idade = int(input("Digite uma idade: "))
+            while True:
+                try:
+                    idade = int(input("Digite uma idade: "))
+                    break
+                except:
+                    print("Digite um valor numérico!!\n")
             self.__lista.append(idade)
 
     def mostraMediana(self):
         sorted_list = sorted(self.__lista)
         n = len(sorted_list)
         if n % 2 == 0:
-            median1 = sorted_list[n // 2 - 1]
-            median2 = sorted_list[n // 2]
-            median = (median1 + median2) / 2
-            print(f"Mediana: {median:.2f}")
+            median = sorted_list[n // 2 - 1]
+            print(f"Mediana: {median}")
         else:
             median = sorted_list[n // 2]
-            print(f"Mediana: {median:.2f}")
+            print(f"Mediana: {median}")
 
     def mostraMenor(self):
         print(f"Menor: {min(self.__lista)}")
@@ -237,13 +259,13 @@ class ListaIdades(AnaliseDados):
 
 
 def main():
-    nomes = ListaNomes()
-    datas = ListaDatas()
-    salarios = ListaSalarios()
-    idades = ListaIdades()
-    listaListas = [nomes, datas, salarios, idades]
-
     while True:
+        nomes = ListaNomes()
+        datas = ListaDatas()
+        salarios = ListaSalarios()
+        idades = ListaIdades()
+        listaListas = [nomes, datas, salarios, idades]
+        
         print("\n------ Menu ------")
         print("1. Nomes\n2. Datas\n3. Salarios\n4. Idades\n5. Sair")
 
@@ -257,24 +279,28 @@ def main():
                 listaListas[0].mostraMediana()
                 listaListas[0].mostraMenor()
                 listaListas[0].mostraMaior()
+                listaListas.clear()
                 print("------------------------------------\n\n")
             case "2":
                 listaListas[1].entradaDeDados()
                 listaListas[1].mostraMediana()
                 listaListas[1].mostraMenor()
                 listaListas[1].mostraMaior()
+                listaListas.clear()
                 print("------------------------------------\n")
             case "3":
                 listaListas[2].entradaDeDados()
                 listaListas[2].mostraMediana()
                 listaListas[2].mostraMenor()
                 listaListas[2].mostraMaior()
+                listaListas.clear()
                 print("------------------------------------\n")
             case "4":
                 listaListas[3].entradaDeDados()
                 listaListas[3].mostraMediana()
                 listaListas[3].mostraMenor()
                 listaListas[3].mostraMaior()
+                listaListas.clear()
                 print("------------------------------------\n")
             case "5":
                 print("Saindo...")
