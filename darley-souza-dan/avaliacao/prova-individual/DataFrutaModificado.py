@@ -98,6 +98,10 @@ class AnaliseDados(ABC):
     def mostraMaior(self):
         pass
 
+    @abstractmethod
+    def listarEmOrdem(self):
+        pass
+
 
 class ListaNomes(AnaliseDados):
     def __init__(self):
@@ -125,6 +129,11 @@ class ListaNomes(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista)}")
+    
+    def listarEmOrdem(self):
+        sorted_list = sorted(self.__lista)
+        print("Lista em ordem:")
+        print(", ".join(sorted_list))
 
     def __str__(self):
         return ", ".join(self.__lista)
@@ -175,6 +184,11 @@ class ListaDatas(AnaliseDados):
         maior_data = max(self.__lista, key=lambda x: (x.ano, x.mes, x.dia))
         print(f"Maior: {maior_data}")
 
+    def listarEmOrdem(self):
+        sorted_list = sorted(self.__lista, key=lambda x: (x.ano, x.mes, x.dia))
+        print("Lista em ordem:")
+        print("\n".join(str(data) for data in sorted_list))
+
     def __str__(self):
         return "\n".join(str(data) for data in self.__lista)
 
@@ -213,6 +227,11 @@ class ListaSalarios(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista):.2f}")
+        
+    def listarEmOrdem(self):
+        sorted_list = sorted(self.__lista)
+        print("Lista em ordem:")
+        print(", ".join(map(str, sorted_list)))
 
     def __str__(self):
         return ", ".join(map(str, self.__lista))
@@ -253,6 +272,11 @@ class ListaIdades(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista)}")
+        
+    def listarEmOrdem(self):
+        sorted_list = sorted(self.__lista)
+        print("Lista em ordem:")
+        print(", ".join(map(str, sorted_list)))
 
     def __str__(self):
         return ", ".join(map(str, self.__lista))
@@ -279,28 +303,28 @@ def main():
                 listaListas[0].mostraMediana()
                 listaListas[0].mostraMenor()
                 listaListas[0].mostraMaior()
-                listaListas.clear()
+                listaListas[0].listarEmOrdem()
                 print("------------------------------------\n\n")
             case "2":
                 listaListas[1].entradaDeDados()
                 listaListas[1].mostraMediana()
                 listaListas[1].mostraMenor()
                 listaListas[1].mostraMaior()
-                listaListas.clear()
+                listaListas[1].listarEmOrdem()
                 print("------------------------------------\n")
             case "3":
                 listaListas[2].entradaDeDados()
                 listaListas[2].mostraMediana()
                 listaListas[2].mostraMenor()
                 listaListas[2].mostraMaior()
-                listaListas.clear()
+                listaListas[2].listarEmOrdem()
                 print("------------------------------------\n")
             case "4":
                 listaListas[3].entradaDeDados()
                 listaListas[3].mostraMediana()
                 listaListas[3].mostraMenor()
                 listaListas[3].mostraMaior()
-                listaListas.clear()
+                listaListas[3].listarEmOrdem()
                 print("------------------------------------\n")
             case "5":
                 print("Saindo...")
