@@ -105,8 +105,9 @@ class AnaliseDados(ABC):
 
 class ListaNomes(AnaliseDados):
     def __init__(self):
-        super().__init__(str)
+        super().__init__(tipoDeDados=str)
         self.__lista = []
+        self.__index = 0
 
     def entradaDeDados(self):
         n = int(input("Quantos nomes deseja adicionar? "))
@@ -129,7 +130,7 @@ class ListaNomes(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista)}")
-    
+
     def listarEmOrdem(self):
         sorted_list = sorted(self.__lista)
         print("Lista em ordem:")
@@ -137,11 +138,22 @@ class ListaNomes(AnaliseDados):
 
     def __str__(self):
         return ", ".join(self.__lista)
+    
+    def __iter__(self):
+        return self
 
+    def __next__(self):
+        if self.__index < len(self.__lista):
+            result = self.__lista[self.__index]
+            self.__index += 1
+            return result
+        else:
+            self.__index = 0
+            raise StopIteration
 
 class ListaDatas(AnaliseDados):
     def __init__(self):
-        super().__init__(Data)
+        super().__init__(tipoDeDados=Data)
         self.__lista = []
 
     def entradaDeDados(self):
@@ -156,7 +168,7 @@ class ListaDatas(AnaliseDados):
                     mes = int(data_input[1])
                     ano = int(data_input[2])
 
-                    if ano < 2020 or mes < 1 or mes > 12 or dia < 1:
+                    if ano < 2000 or mes < 1 or mes > 12 or dia < 1:
                         raise ValueError("A data inserida não atende aos requisitos.")
 
                     data = Data(dia, mes, ano)
@@ -165,6 +177,7 @@ class ListaDatas(AnaliseDados):
 
                 except ValueError as e:
                     print(f"Erro: {e}. Tente novamente.")
+                    
 
     def mostraMediana(self):
         sorted_list = sorted(self.__lista, key=lambda x: (x.ano, x.mes, x.dia))
@@ -191,11 +204,24 @@ class ListaDatas(AnaliseDados):
 
     def __str__(self):
         return "\n".join(str(data) for data in self.__lista)
+    
+    def __iter__(self):
+        self.__index = 0
+        return self
+
+    def __next__(self):
+        if self.__index < len(self.__lista):
+            result = self.__lista[self.__index]
+            self.__index += 1
+            return result
+        else:
+            self.__index = 0
+            raise StopIteration
 
 
 class ListaSalarios(AnaliseDados):
     def __init__(self):
-        super().__init__(float)
+        super().__init__(tipoDeDados=float)
         self.__lista = []
 
     def entradaDeDados(self):
@@ -215,8 +241,9 @@ class ListaSalarios(AnaliseDados):
     def mostraMediana(self):
         sorted_list = sorted(self.__lista)
         n = len(sorted_list)
+
         if n % 2 == 0:
-            median = sorted_list[n // 2 - 1]
+            median = (sorted_list[n // 2 - 1] + sorted_list[n // 2]) / 2
             print(f"Mediana: {median:.2f}")
         else:
             median = sorted_list[n // 2]
@@ -227,7 +254,7 @@ class ListaSalarios(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista):.2f}")
-        
+
     def listarEmOrdem(self):
         sorted_list = sorted(self.__lista)
         print("Lista em ordem:")
@@ -235,11 +262,24 @@ class ListaSalarios(AnaliseDados):
 
     def __str__(self):
         return ", ".join(map(str, self.__lista))
+    
+    def __iter__(self):
+        self.__index = 0
+        return self
+    
+    def __next__(self):
+        if self.__index < len(self.__lista):
+            result = self.__lista[self.__index]
+            self.__index += 1
+            return result
+        else:
+            self.__index = 0
+            raise StopIteration
 
 
 class ListaIdades(AnaliseDados):
     def __init__(self):
-        super().__init__(int)
+        super().__init__(tipoDeDados=int)
         self.__lista = []
 
     def entradaDeDados(self):
@@ -247,7 +287,7 @@ class ListaIdades(AnaliseDados):
             n = int(input("Quantas idades deseja adicionar? "))
         except:
             print("Digite um valor numérico!!\n")
-        
+
         for _ in range(n):
             while True:
                 try:
@@ -261,7 +301,7 @@ class ListaIdades(AnaliseDados):
         sorted_list = sorted(self.__lista)
         n = len(sorted_list)
         if n % 2 == 0:
-            median = sorted_list[n // 2 - 1]
+            median = (sorted_list[n // 2 - 1] + sorted_list[n // 2]) / 2
             print(f"Mediana: {median}")
         else:
             median = sorted_list[n // 2]
@@ -272,7 +312,7 @@ class ListaIdades(AnaliseDados):
 
     def mostraMaior(self):
         print(f"Maior: {max(self.__lista)}")
-        
+
     def listarEmOrdem(self):
         sorted_list = sorted(self.__lista)
         print("Lista em ordem:")
@@ -283,15 +323,17 @@ class ListaIdades(AnaliseDados):
 
 
 def main():
+    nomes = ListaNomes()
+    datas = ListaDatas()
+    salarios = ListaSalarios()
+    idades = ListaIdades()
+    listaListas = [nomes, datas, salarios, idades]
+
     while True:
-        nomes = ListaNomes()
-        datas = ListaDatas()
-        salarios = ListaSalarios()
-        idades = ListaIdades()
-        listaListas = [nomes, datas, salarios, idades]
-        
         print("\n------ Menu ------")
-        print("1. Nomes\n2. Datas\n3. Salarios\n4. Idades\n5. Sair")
+        print(
+            "1. Nomes\n2. Datas\n3. Salarios\n4. Idades\n5. Percorrer listas de nomes e salários\n6. Calcular reajuste de 10%\n7. Modificar datas\n8. Sair"
+        )
 
         opcao = input("Selecione a opção: ")
 
@@ -327,6 +369,18 @@ def main():
                 listaListas[3].listarEmOrdem()
                 print("------------------------------------\n")
             case "5":
+                for nome, salario in zip(nomes, salarios):
+                    print(f"{nome}: R${salario:.2f}")
+            case "6":
+                salarios_reajustados = map(lambda salario: salario * 1.1, salarios)
+                for salario in salarios_reajustados:
+                    print(f"Novo Salário: R${salario:.2f}")
+            case "7":
+                datas_modificadas = filter(lambda x: x.ano < 2019, datas)
+                for data in datas_modificadas:
+                    data.dia = 1
+                    print(data)
+            case "8":
                 print("Saindo...")
                 break
             case _:
